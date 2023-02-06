@@ -1,3 +1,5 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://pinterest.quotesandsayings.net/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'quotes pinterest automation'
+theme = "quotes_pinterest_automation"
+ignoreErrors = ["error-remote-getjson"]
