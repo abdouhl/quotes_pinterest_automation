@@ -1,39 +1,28 @@
+{{ $author_username := index (split .RelPermalink "/") 2 }}
+{{ $dataJ := getJSON "https://iauisz.deta.dev/" $author_username "/en" }}
+{{ $pp := .Permalink }}
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 <channel>
-<title>{{ .Title }}</title>
+<title>{{ print $author_username " Quotes" }}</title>
 <link>{{ .Permalink }}</link>
-<description>{{ .Description }}</description>
+<description>{{ print $author_username " Quotes" }}</description>
 <language>en-us</language>
 <atom:link href="{{ .Permalink }}index.xml" rel="self" type="application/rss+xml"/>
+  {{- range $dataJ.quotes_list -}}
+ 
 
-  {{- range .Site.RegularPages -}}
-  	  {{ $type := index (split .RelPermalink "/") 4 }}
-  	  
-  	{{ if eq $type "w_tshirt" }}  
-  	
-  	
-  	
-	  {{ $tweet_id := index (split .RelPermalink "/") 3 }}
-    
-    {{ $dataJ := getJSON "https://cdn.syndication.twimg.com/tweet-result?id=" $tweet_id  }}
-{{ $ww := "" }}    
-{{ with .Parent }}
-{{ $w := .Resources.GetMatch "w.png" }}
- {{ $ww = urlquery $w.Permalink | safeURL }}
- {{ $ww = print "https://rlv.zazzle.com/svc/view?pid=235293855806478511&realview=113562383382757001&max_dim=1024&at=238414036962221940&t_image1_url=" $ww }}
- {{- end -}}
+  {{ $tweet_id := .key }}
     <item>
-    <title>{{ $dataJ.text }}</title>
-    <link>{{ .Permalink }}</link>
-    <description>Tweet Tshirt: {{ $dataJ.text }}</description>
-    <image>{{ $ww }}</image>
+    <title>{{ print $author_username " Quote" }}</title>
+    <link>{{  print "https://www.quotesandsayings.net/quotes/" $author_username "-" $tweet_id}}</link>
+    <description>{{ print $author_username " Quote:" .text }}</description>
+    <image>{{  print $pp  $tweet_id ".png"}}</image>
   </item>
   
   
   
   
 {{- end -}}
-  {{- end -}}
 
 </channel>
 </rss>
