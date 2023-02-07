@@ -1,11 +1,12 @@
 {{ $author_username := index (split .RelPermalink "/") 2 }}
 {{ $dataJ := getJSON "https://iauisz.deta.dev/" $author_username "/en" }}
+{{ $author_name := $dataJ.author.name }}
 {{ $pp := .Permalink }}
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 <channel>
-<title>{{ print $author_username " Quotes" }}</title>
+<title>{{ print $author_name " Quotes" }}</title>
 <link>{{ .Permalink }}</link>
-<description>{{ print $author_username " Quotes" }}</description>
+<description>{{ print $author_name " Quotes" }}</description>
 <language>en-us</language>
 <atom:link href="{{ .Permalink }}index.xml" rel="self" type="application/rss+xml"/>
   {{- range $dataJ.quotes_list -}}
@@ -13,9 +14,9 @@
 
   {{ $tweet_id := .key }}
     <item>
-    <title>{{ print $author_username " Quote" }}</title>
+    <title>{{ print $author_name " Quote" }}</title>
     <link>{{  print "https://www.quotesandsayings.net/quotes/" $author_username "-" $tweet_id}}</link>
-    <description>{{ print $author_username " Quote:" .text }}</description>
+    <description>{{ print $author_name " Quote:" .text }}</description>
     <image>{{  print $pp  $tweet_id ".png"}}</image>
   </item>
   
